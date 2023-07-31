@@ -7,6 +7,7 @@ string currencyType;
 string conversionType;
 double conversionAmount;
 double convertedAmount;
+bool typeError;
 
 string getCurrencyType() {
     cout << "What type of currency are you exchanging?\n";
@@ -41,12 +42,6 @@ string getCurrencyType() {
 
 string getConversionType() {
 
-    conversionType = currencyType;
-
-    while (conversionType == currencyType) {
-
-
-
     cout << "What type of currency do you want to exchange to?\n";
     cout << "1. US Dollar(USD)\n";
     cout << "2. Euro (EUR)\n";
@@ -55,8 +50,40 @@ string getConversionType() {
     cout << "5. Austrialian Dollar (AUD)\n";
     cin >> schoice;
     cout << endl;
- 
 
+    if (schoice == choice || schoice > 5) {
+        typeError = true;
+    }
+
+    while (typeError) {
+        if (schoice == choice) {
+            cout << "You can't convert " << currencyType << " into " << currencyType << "." << endl;
+            cout << "What type of currency do you want to exchange to?\n";
+            cout << "1. US Dollar(USD)\n";
+            cout << "2. Euro (EUR)\n";
+            cout << "3. British Pound (GBP)\n";
+            cout << "4. Japanese Yen (JPY)\n";
+            cout << "5. Austrialian Dollar (AUD)\n";
+            cin >> schoice;
+            cout << endl;   
+        }
+        else if (schoice > 5){
+            cout << "Choice must be between 1 and 5." << endl;
+            cout << "What type of currency do you want to exchange to?\n";
+            cout << "1. US Dollar(USD)\n";
+            cout << "2. Euro (EUR)\n";
+            cout << "3. British Pound (GBP)\n";
+            cout << "4. Japanese Yen (JPY)\n";
+            cout << "5. Austrialian Dollar (AUD)\n";
+            cin >> schoice;
+            cout << endl;
+        }
+        else {
+            typeError = false;
+        }
+        
+    }
+    
 
     switch (schoice){
         case 1:
@@ -76,7 +103,7 @@ string getConversionType() {
         break;
     }
 
-    }
+    
     
     return conversionType;
 }
