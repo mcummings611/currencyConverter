@@ -40,6 +40,13 @@ string getCurrencyType() {
 }
 
 string getConversionType() {
+
+    conversionType = currencyType;
+
+    while (conversionType == currencyType) {
+
+
+
     cout << "What type of currency do you want to exchange to?\n";
     cout << "1. US Dollar(USD)\n";
     cout << "2. Euro (EUR)\n";
@@ -48,23 +55,8 @@ string getConversionType() {
     cout << "5. Austrialian Dollar (AUD)\n";
     cin >> schoice;
     cout << endl;
-
-
-    /* Do while loop that is supposed to give the prompt again if someone entered the same currency twice, instead it runs every time even if the second choice is different from the first.
-
-    do {
-        cout << "You can't convert " << currencyType << " into " << currencyType << "." << endl;
-        cout << "What type of currency do you want to exchange to?\n";
-        cout << "1. US Dollar(USD)\n";
-        cout << "2. Euro (EUR)\n";
-        cout << "3. British Pound (GBP)\n";
-        cout << "4. Japanese Yen (JPY)\n";
-        cout << "5. Austrialian Dollar (AUD)\n";
-        cin >> schoice;
-        cout << endl;
-    }
-    while (schoice == choice);*/
  
+
 
     switch (schoice){
         case 1:
@@ -82,6 +74,8 @@ string getConversionType() {
         case 5:
         conversionType = "AUD";
         break;
+    }
+
     }
     
     return conversionType;
