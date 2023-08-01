@@ -18,6 +18,8 @@ int main() {
     cout << conversionAmount << " " << currencyType << " will be converted into " << conversionType << ".\n";
     cout << endl;
 
+    combineTypes();
+
     conversionLogic();
     cout << conversionAmount << " " << currencyType << " converts to " << convertedAmount << " " << conversionType << ".\n";
 }
