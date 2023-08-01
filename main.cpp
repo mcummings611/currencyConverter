@@ -21,5 +21,7 @@ int main() {
     combineTypes();
 
     conversionLogic();
-    cout << conversionAmount << " " << currencyType << " converts to " << convertedAmount << " " << conversionType << ".\n";
+    cout << conversionAmount << " " << currencyType << " converts to "; 
+    printf("%.2f", convertedAmount);
+    cout << " " << conversionType << ".\n";
 }
