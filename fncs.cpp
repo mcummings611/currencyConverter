@@ -1,15 +1,43 @@
 #include <iostream>
+#include <map>
 using namespace std;
 
-int choice;
-int schoice;
-string currencyType;
-string conversionType;
-double conversionAmount;
-double convertedAmount;
+int choice, schoice;
+std::string currencyType, conversionType,combinedTypes;
+double conversionAmount, convertedAmount, exchangeRate;
 bool typeError;
 
-string getCurrencyType() {
+std::map<std::string, double> currencyExchange{
+{"USDEUR", 0.90752},
+{"USDGBP", 0.778476},
+{"USDJPY", 141.171223},
+{"USDAUD", 1.503506},
+
+{"EURUSD", 1.102558},
+{"EURGBP", 0.858316},
+{"EURJPY", 155.649481},
+{"EURAUD", 1.657703},
+
+{"GBPUSD", 1.284560},
+{"GBPEUR", 1.165073},
+{"GBPJPY", 181.342958},
+{"GBPAUD", 1.931345},
+
+{"JPYUSD", 0.007084},
+{"JPYEUR", 0.006425},
+{"JPYGBP", 0.005514},
+{"JPYAUD", 0.010650},
+
+{"AUDUSD", 0.665112},
+{"AUDEUR", 0.603244},
+{"AUDGBP", 0.517774},
+{"AUDJPY", 93.894655},
+
+};
+
+
+
+std::string getCurrencyType() {
     cout << "What type of currency are you exchanging?\n";
     cout << "1. US Dollar(USD)\n";
     cout << "2. Euro (EUR)\n";
@@ -18,6 +46,28 @@ string getCurrencyType() {
     cout << "5. Austrialian Dollar (AUD)\n";
     cin >> choice;
     cout << endl;
+
+    if (choice > 5 || choice < 1) {
+        typeError = true;
+    }
+
+    while (typeError) {
+        if (choice > 5 || choice < 1){
+            cout << "Choice must be between 1 and 5." << endl;
+            cout << "What type of currency are you exchanging?\n";
+            cout << "1. US Dollar(USD)\n";
+            cout << "2. Euro (EUR)\n";
+            cout << "3. British Pound (GBP)\n";
+            cout << "4. Japanese Yen (JPY)\n";
+            cout << "5. Austrialian Dollar (AUD)\n";
+            cin >> choice;
+            cout << endl;
+        }
+        else {
+            typeError = false;
+        }
+        
+    }
 
     switch (choice){
         case 1:
@@ -40,7 +90,7 @@ string getCurrencyType() {
     return currencyType;
 }
 
-string getConversionType() {
+std::string getConversionType() {
 
     cout << "What type of currency do you want to exchange to?\n";
     cout << "1. US Dollar(USD)\n";
@@ -51,7 +101,7 @@ string getConversionType() {
     cin >> schoice;
     cout << endl;
 
-    if (schoice == choice || schoice > 5) {
+    if (schoice == choice || schoice > 5 || schoice < 1) {
         typeError = true;
     }
 
@@ -67,7 +117,7 @@ string getConversionType() {
             cin >> schoice;
             cout << endl;   
         }
-        else if (schoice > 5){
+        else if (schoice > 5 || schoice < 1){
             cout << "Choice must be between 1 and 5." << endl;
             cout << "What type of currency do you want to exchange to?\n";
             cout << "1. US Dollar(USD)\n";
@@ -84,7 +134,6 @@ string getConversionType() {
         
     }
     
-
     switch (schoice){
         case 1:
         conversionType = "USD";
@@ -103,8 +152,6 @@ string getConversionType() {
         break;
     }
 
-    
-    
     return conversionType;
 }
 
@@ -116,73 +163,17 @@ double getConversionAmount() {
     return conversionAmount;
 }
 
+std::string combineTypes() {
+    combinedTypes = currencyType + conversionType;
+    cout << endl;
+
+    return combinedTypes;
+}
+
 double conversionLogic() {
 
-    if (currencyType == "USD" && conversionType == "EUR") {
-        convertedAmount = conversionAmount * 0.90752; 
-    }
-    else if (currencyType == "USD" && conversionType == "GBP") {
-        convertedAmount = conversionAmount * 0.778476; 
-    }
-    else if (currencyType == "USD" && conversionType == "JPY") {
-        convertedAmount = conversionAmount * 141.171223; 
-    }
-    else if (currencyType == "USD" && conversionType == "AUD") {
-        convertedAmount = conversionAmount * 1.503506; 
-    }
+    exchangeRate = currencyExchange[combinedTypes];
+    convertedAmount = conversionAmount * exchangeRate;
 
-    else if (currencyType == "EUR" && conversionType == "USD") {
-        convertedAmount = conversionAmount * 1.102558; 
-    }
-    else if (currencyType == "EUR" && conversionType == "GBP") {
-        convertedAmount = conversionAmount * 0.858316; 
-    }
-    else if (currencyType == "EUR" && conversionType == "JPY") {
-        convertedAmount = conversionAmount * 155.649481; 
-    }
-    else if (currencyType == "EUR" && conversionType == "AUD") {
-        convertedAmount = conversionAmount * 1.657703; 
-    }
-
-    else if (currencyType == "GBP" && conversionType == "USD") {
-        convertedAmount = conversionAmount * 1.284560; 
-    }
-    else if (currencyType == "GBP" && conversionType == "EUR") {
-        convertedAmount = conversionAmount * 1.165073; 
-    }
-    else if (currencyType == "GBP" && conversionType == "JPY") {
-        convertedAmount = conversionAmount * 181.342958; 
-    }
-    else if (currencyType == "GBP" && conversionType == "AUD") {
-        convertedAmount = conversionAmount * 1.931345; 
-    }
-
-    else if (currencyType == "JPY" && conversionType == "USD") {
-        convertedAmount = conversionAmount * 0.007084; 
-    }
-    else if (currencyType == "JPY" && conversionType == "EUR") {
-        convertedAmount = conversionAmount * 0.006425; 
-    }
-    else if (currencyType == "JPY" && conversionType == "GBP") {
-        convertedAmount = conversionAmount * 0.005514; 
-    }
-    else if (currencyType == "JPY" && conversionType == "AUD") {
-        convertedAmount = conversionAmount * 0.010650; 
-    }
-    
-    else if (currencyType == "AUD" && conversionType == "USD") {
-        convertedAmount = conversionAmount * 0.665112; 
-    }
-    else if (currencyType == "AUD" && conversionType == "EUR") {
-        convertedAmount = conversionAmount * 0.603244; 
-    }
-    else if (currencyType == "AUD" && conversionType == "GBP") {
-        convertedAmount = conversionAmount * 0.517774; 
-    }
-    else if (currencyType == "AUD" && conversionType == "JPY") {
-        convertedAmount = conversionAmount * 93.894655; 
-    }
-
-    return conversionAmount;
-
+    return convertedAmount;
 }
